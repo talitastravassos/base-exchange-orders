@@ -1,7 +1,6 @@
 import { Order } from '../../../types/order';
-import { matchOrder } from '../../../core/matching-engine/engine';
 
-const API_URL = 'http://localhost:3001/orders';
+const API_URL = '/api/orders';
 
 export const orderService = {
   async fetchOrders(): Promise<Order[]> {
@@ -17,37 +16,10 @@ export const orderService = {
   },
 
   async createOrder(newOrderData: Pick<Order, 'instrument' | 'side' | 'price' | 'quantity'>): Promise<Order> {
-    const existingOrders = await this.fetchOrders();
-    
-    const newOrder: Order = {
-      id: Math.random().toString(36).substring(2, 9),
-      ...newOrderData,
-      remainingQuantity: newOrderData.quantity,
-      status: 'Open',
-      createdAt: new Date().toISOString(),
-      history: [
-        { status: 'Open', timestamp: new Date().toISOString() }
-      ],
-    };
-
-    const { updatedOrders, newOrder: processedNewOrder } = matchOrder(newOrder, existingOrders);
-
-    for (const order of updatedOrders) {
-      await fetch(`${API_URL}/${order.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          status: order.status,
-          remainingQuantity: order.remainingQuantity,
-          history: order.history,
-        }),
-      });
-    }
-
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(processedNewOrder),
+      body: JSON.stringify(newOrderData),
     });
 
     if (!response.ok) throw new Error('Failed to create order');

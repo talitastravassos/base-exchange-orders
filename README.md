@@ -16,13 +16,14 @@ The **Order Management Module** is a core component of the BASE Exchange ecosyst
 
 The project follows a clean, scalable architecture with a strict separation of concerns:
 
+- **API Layer (`app/api`)**: Built with **Next.js API Routes**. It handles order persistence and executes the matching engine on the server side.
 - **Core Layer (`src/core`)**: Contains the pure business logic (Matching Engine). This layer is independent of React and frameworks, ensuring it is highly testable and reusable.
 - **Feature Layer (`src/features`)**: Organizes code by domain (Orders). Includes:
   - **Hooks**: TanStack Query implementations for server state.
   - **Services**: API interaction and orchestration logic.
   - **Components**: Feature-specific UI elements (Table, Form, Filters).
 - **Domain Layer (`src/types`)**: Centralized TypeScript definitions for the entire system.
-- **Infrastructure Layer (`src/lib`)**: Global configurations for Query Client, Mock API providers, and shared utilities.
+- **Infrastructure Layer (`src/lib`)**: Global configurations for Query Client, Mock In-Memory Database, and shared utilities.
 
 ## ⚙️ Order Matching Logic (The Engine)
 
@@ -52,7 +53,7 @@ The system implements a **Price-Time Priority (FIFO)** matching algorithm, simul
 - **Forms**: React Hook Form + Zod
 - **Date Handling**: Day.js
 - **Styling**: Tailwind CSS
-- **Mock API**: JSON Server
+- **API Simulation**: Next.js API Routes
 - **Testing**: Jest + React Testing Library
 
 ## 🚦 How to Run the Project
@@ -63,21 +64,17 @@ The system implements a **Price-Time Priority (FIFO)** matching algorithm, simul
 npm install
 ```
 
-### 2. Start the Mock API Server
+### 2. Start the Development Server
 
-The application requires the mock backend to persist and match orders. It runs on port `3001`.
-
-```bash
-npm run mock-server
-```
-
-### 3. Start the Development Server
+The application uses built-in API Routes for the mock backend. No external server is required.
 
 ```bash
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+> **Note on Persistence:** In development, data is held in memory. In Vercel deployments, the data is ephemeral and will reset upon Serverless Function cold starts.
 
 ## 🧪 How to Run Tests
 
@@ -100,7 +97,9 @@ npm test
 
 ```
 src
-├── app/                  # Next.js Pages & Layouts
+├── app
+│   ├── api/              # Next.js API Routes (The Mock Backend)
+│   └── orders/           # Dashboard Page
 ├── components/           # Generic UI Components
 ├── core/                 # Business Logic (Matching Engine)
 ├── features/             # Domain-specific modules (Orders)

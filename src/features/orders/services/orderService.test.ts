@@ -7,44 +7,21 @@ describe('OrderService Integration', () => {
     jest.clearAllMocks();
   });
 
-  test('createOrder should fetch orders, match them, and update DB', async () => {
-    const mockExistingOrders = [
-      {
-        id: 's1',
-        instrument: 'AAPL',
-        side: 'Sell',
-        price: 150,
-        quantity: 100,
-        remainingQuantity: 100,
-        status: 'Open',
-        createdAt: new Date().toISOString(),
-        history: [{ status: 'Open', timestamp: new Date().toISOString() }],
-      },
-    ];
+  test('createOrder should call the API and return the processed order', async () => {
+    const mockNewOrder = { instrument: 'AAPL', side: 'Buy' as const, price: 150, quantity: 100 };
+    const mockResponse = { ...mockNewOrder, id: 'new1', status: 'Executed', remainingQuantity: 0 };
 
     (fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
-      json: async () => mockExistingOrders,
+      json: async () => mockResponse,
     });
 
-    (fetch as jest.Mock).mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({ ...mockExistingOrders[0], status: 'Executed', remainingQuantity: 0 }),
-    });
+    const result = await orderService.createOrder(mockNewOrder);
 
-    (fetch as jest.Mock).mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({ id: 'new1', status: 'Executed', remainingQuantity: 0 }),
-    });
-
-    const result = await orderService.createOrder({
-      instrument: 'AAPL',
-      side: 'Buy',
-      price: 150,
-      quantity: 100,
-    });
-
-    expect(fetch).toHaveBeenCalledTimes(3);
+    expect(fetch).toHaveBeenCalledWith('/api/orders', expect.objectContaining({
+      method: 'POST',
+      body: JSON.stringify(mockNewOrder)
+    }));
     expect(result.status).toBe('Executed');
     expect(result.remainingQuantity).toBe(0);
   });
