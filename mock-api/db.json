@@ -1,0 +1,53 @@
+{
+  "orders": [
+    {
+      "id": "1",
+      "instrument": "AAPL",
+      "side": "Buy",
+      "price": 150,
+      "quantity": 100,
+      "remainingQuantity": 100,
+      "status": "Open",
+      "createdAt": "2026-03-10T10:00:00.000Z",
+      "history": [
+        {
+          "status": "Open",
+          "timestamp": "2026-03-10T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "instrument": "GOOGL",
+      "side": "Sell",
+      "price": 2800,
+      "quantity": 50,
+      "remainingQuantity": 50,
+      "status": "Open",
+      "createdAt": "2026-03-10T10:05:00.000Z",
+      "history": [
+        {
+          "status": "Open",
+          "timestamp": "2026-03-10T10:05:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "32pqqus",
+      "instrument": "AAPL",
+      "side": "Buy",
+      "price": 500,
+      "quantity": 2,
+      "remainingQuantity": 2,
+      "status": "Open",
+      "createdAt": "2026-03-10T14:12:22.655Z",
+      "history": [
+        {
+          "status": "Open",
+          "timestamp": "2026-03-10T14:12:22.655Z"
+        }
+      ]
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
