@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useOrders, useCreateOrder, useCancelOrder } from '../../src/features/orders/hooks/useOrders';
 import { OrderTable } from '../../src/features/orders/components/OrderTable';
-import { OrderForm } from '../../src/features/orders/components/OrderForm';
+import { OrderForm, OrderFormData } from '../../src/features/orders/components/OrderForm';
 import { OrderDetails } from '../../src/features/orders/components/OrderDetails';
 import { ConfirmationModal } from '../../src/features/orders/components/ConfirmationModal';
 
@@ -15,12 +15,11 @@ export default function OrdersPage() {
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [orderToCancel, setOrderToCancel] = useState<string | null>(null);
 
-  const selectedOrder = orders.find(o => o.id === selectedOrderId);
+  const selectedOrder = orders.find(o => o.id === selectedOrderId); 
 
-  const handleCreateOrder = (data: any) => {
+  const handleCreateOrder = (data: OrderFormData) => {
     createOrderMutation.mutate(data);
   };
-
   const handleCancelConfirm = () => {
     if (orderToCancel) {
       cancelOrderMutation.mutate(orderToCancel, {

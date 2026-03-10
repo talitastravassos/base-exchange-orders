@@ -1,4 +1,4 @@
-import { Order, OrderStatus } from '../../../types/order';
+import { Order } from '../../../types/order';
 import { matchOrder } from '../../../core/matching-engine/engine';
 
 const API_URL = 'http://localhost:3001/orders';
@@ -17,10 +17,8 @@ export const orderService = {
   },
 
   async createOrder(newOrderData: Pick<Order, 'instrument' | 'side' | 'price' | 'quantity'>): Promise<Order> {
-    // 1. Fetch all orders to match
     const existingOrders = await this.fetchOrders();
     
-    // 2. Prepare the new order object
     const newOrder: Order = {
       id: Math.random().toString(36).substring(2, 9),
       ...newOrderData,
@@ -32,11 +30,8 @@ export const orderService = {
       ],
     };
 
-    // 3. Run matching engine
     const { updatedOrders, newOrder: processedNewOrder } = matchOrder(newOrder, existingOrders);
 
-    // 4. Update counterparties in the DB
-    // In a real backend, this would be a single transaction.
     for (const order of updatedOrders) {
       await fetch(`${API_URL}/${order.id}`, {
         method: 'PATCH',
@@ -49,7 +44,6 @@ export const orderService = {
       });
     }
 
-    // 5. Save the new order
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

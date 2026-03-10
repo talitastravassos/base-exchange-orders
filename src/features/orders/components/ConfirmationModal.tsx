@@ -1,7 +1,3 @@
-'use client';
-
-import React from 'react';
-
 interface ConfirmationModalProps {
   isOpen: boolean;
   title: string;
@@ -42,7 +38,9 @@ export function ConfirmationModal({
             onClick={onConfirm}
             disabled={isLoading}
             className={`px-4 py-2 rounded font-bold text-white ${
-              isLoading ? 'bg-red-400 cursor-not-allowed' : 'bg-red-600 hover:bg-red-700'
+              isLoading
+                ? 'bg-red-400 cursor-not-allowed'
+                : 'bg-red-600 hover:bg-red-700'
             }`}
           >
             {isLoading ? 'Processing...' : 'Confirm'}

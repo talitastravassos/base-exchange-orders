@@ -6,13 +6,21 @@
       "side": "Buy",
       "price": 150,
       "quantity": 100,
-      "remainingQuantity": 100,
-      "status": "Open",
+      "remainingQuantity": 92,
+      "status": "Partial",
       "createdAt": "2026-03-10T10:00:00.000Z",
       "history": [
         {
           "status": "Open",
           "timestamp": "2026-03-10T10:00:00.000Z"
+        },
+        {
+          "status": "Partial",
+          "timestamp": "2026-03-10T14:46:40.900Z"
+        },
+        {
+          "status": "Partial",
+          "timestamp": "2026-03-10T14:47:35.658Z"
         }
       ]
     },
@@ -39,12 +47,52 @@
       "price": 500,
       "quantity": 2,
       "remainingQuantity": 2,
-      "status": "Open",
+      "status": "Cancelled",
       "createdAt": "2026-03-10T14:12:22.655Z",
       "history": [
         {
           "status": "Open",
           "timestamp": "2026-03-10T14:12:22.655Z"
+        },
+        {
+          "status": "Cancelled",
+          "timestamp": "2026-03-10T14:41:07.714Z"
+        }
+      ]
+    },
+    {
+      "id": "ff1m4hs",
+      "instrument": "META",
+      "side": "Buy",
+      "price": 5,
+      "quantity": 10,
+      "remainingQuantity": 10,
+      "status": "Open",
+      "createdAt": "2026-03-10T14:47:17.225Z",
+      "history": [
+        {
+          "status": "Open",
+          "timestamp": "2026-03-10T14:47:17.225Z"
+        }
+      ]
+    },
+    {
+      "id": "ft1h0x7",
+      "instrument": "META",
+      "side": "Sell",
+      "price": 6,
+      "quantity": 5,
+      "remainingQuantity": 0,
+      "status": "Executed",
+      "createdAt": "2026-03-10T14:47:35.658Z",
+      "history": [
+        {
+          "status": "Open",
+          "timestamp": "2026-03-10T14:47:35.658Z"
+        },
+        {
+          "status": "Executed",
+          "timestamp": "2026-03-10T14:47:35.658Z"
         }
       ]
     }

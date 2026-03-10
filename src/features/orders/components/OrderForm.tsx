@@ -1,10 +1,9 @@
 'use client';
 
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { OrderSide } from '../../../types/order';
+
 
 const orderSchema = z.object({
   instrument: z.string().min(1, 'Instrument is required'),
@@ -13,7 +12,7 @@ const orderSchema = z.object({
   quantity: z.number().int().positive('Quantity must be a positive integer'),
 });
 
-type OrderFormData = z.infer<typeof orderSchema>;
+export type OrderFormData = z.infer<typeof orderSchema>;
 
 interface OrderFormProps {
   onSubmit: (data: OrderFormData) => void;
