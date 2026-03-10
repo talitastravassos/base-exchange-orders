@@ -21,47 +21,71 @@ export function OrderFilters({ filters, onFilterChange }: OrderFiltersProps) {
   };
 
   return (
-    <div className="flex flex-wrap gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-sm border dark:border-gray-700" role="search" aria-label="Order filters">
+    <div
+      className="flex flex-wrap items-end gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-sm border dark:border-gray-700"
+      role="search"
+      aria-label="Order filters"
+    >
       <div className="flex flex-col gap-1">
-        <label htmlFor="filter-id" className="text-xs font-semibold text-gray-500 uppercase">Order ID</label>
-        <input 
+        <label
+          htmlFor="filter-id"
+          className="text-xs font-semibold text-gray-500 uppercase"
+        >
+          Order ID
+        </label>
+        <input
           id="filter-id"
-          type="text" 
-          placeholder="e.g. 7x2j9" 
-          className="p-2 border rounded text-black dark:text-white dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 w-32 outline-none"
+          type="text"
+          placeholder="e.g. 7x2j9"
+          className="h-10 px-2 border rounded text-black dark:text-white dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 w-32 outline-none"
           value={filters.id}
           onChange={(e) => handleChange('id', e.target.value)}
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="filter-instrument" className="text-xs font-semibold text-gray-500 uppercase">Instrument</label>
-        <input 
+        <label
+          htmlFor="filter-instrument"
+          className="text-xs font-semibold text-gray-500 uppercase"
+        >
+          Instrument
+        </label>
+        <input
           id="filter-instrument"
-          type="text" 
-          placeholder="Filter Instrument" 
-          className="p-2 border rounded text-black dark:text-white dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 outline-none"
+          type="text"
+          placeholder="Filter Instrument"
+          className="h-10 px-2 border rounded text-black dark:text-white dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 outline-none"
           value={filters.instrument}
           onChange={(e) => handleChange('instrument', e.target.value)}
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="filter-date" className="text-xs font-semibold text-gray-500 uppercase">Date</label>
-        <input 
+        <label
+          htmlFor="filter-date"
+          className="text-xs font-semibold text-gray-500 uppercase"
+        >
+          Date
+        </label>
+        <input
           id="filter-date"
-          type="date" 
-          className="p-2 border rounded text-black dark:text-white dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 outline-none"
+          type="date"
+          className="h-10 px-2 border rounded text-black dark:text-white dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 outline-none"
           value={filters.date}
           onChange={(e) => handleChange('date', e.target.value)}
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="filter-status" className="text-xs font-semibold text-gray-500 uppercase">Status</label>
-        <select 
+        <label
+          htmlFor="filter-status"
+          className="text-xs font-semibold text-gray-500 uppercase"
+        >
+          Status
+        </label>
+        <select
           id="filter-status"
-          className="p-2 border rounded text-black dark:text-white dark:bg-gray-700 outline-none cursor-pointer"
+          className="h-10 px-2 border rounded text-black dark:text-white dark:bg-gray-700 outline-none cursor-pointer"
           value={filters.status}
           onChange={(e) => handleChange('status', e.target.value)}
         >
@@ -74,10 +98,15 @@ export function OrderFilters({ filters, onFilterChange }: OrderFiltersProps) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="filter-side" className="text-xs font-semibold text-gray-500 uppercase">Side</label>
-        <select 
+        <label
+          htmlFor="filter-side"
+          className="text-xs font-semibold text-gray-500 uppercase"
+        >
+          Side
+        </label>
+        <select
           id="filter-side"
-          className="p-2 border rounded text-black dark:text-white dark:bg-gray-700 outline-none cursor-pointer"
+          className="h-10 px-2 border rounded text-black dark:text-white dark:bg-gray-700 outline-none cursor-pointer"
           value={filters.side}
           onChange={(e) => handleChange('side', e.target.value)}
         >

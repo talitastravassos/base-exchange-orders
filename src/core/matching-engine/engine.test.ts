@@ -71,4 +71,25 @@ describe('Matching Engine', () => {
     expect(result.newOrder.remainingQuantity).toBe(100);
     expect(result.updatedOrders).toHaveLength(0);
   });
+
+  test('Sell side match: Sell 100 vs Buy 100', () => {
+    const sellOrder = createOrder({ side: 'Sell', price: 150, quantity: 100, remainingQuantity: 100 });
+    const buyOrder = createOrder({ side: 'Buy', price: 150, quantity: 100, remainingQuantity: 100 });
+
+    const result = matchOrder(sellOrder, [buyOrder]);
+
+    expect(result.newOrder.status).toBe('Executed');
+    expect(result.newOrder.remainingQuantity).toBe(0);
+    expect(result.updatedOrders[0].status).toBe('Executed');
+  });
+
+  test('No match: Buy side vs Buy side', () => {
+    const buyOrder1 = createOrder({ side: 'Buy', price: 150, quantity: 100 });
+    const buyOrder2 = createOrder({ side: 'Buy', price: 150, quantity: 100 });
+
+    const result = matchOrder(buyOrder1, [buyOrder2]);
+
+    expect(result.newOrder.status).toBe('Open');
+    expect(result.updatedOrders).toHaveLength(0);
+  });
 });

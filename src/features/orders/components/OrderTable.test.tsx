@@ -44,7 +44,6 @@ describe('OrderTable Component', () => {
   test('calls onSelectOrder when a row is clicked', () => {
     render(<OrderTable orders={mockOrders} onSelectOrder={mockOnSelect} onCancelOrder={mockOnCancel} />);
     
-    // Rows have role='button'
     const rows = screen.getAllByRole('button', { name: /Order/i });
     fireEvent.click(rows[0]);
     expect(mockOnSelect).toHaveBeenCalledWith('1');
@@ -62,5 +61,40 @@ describe('OrderTable Component', () => {
   test('shows empty state message when no orders are provided after filtering', () => {
     render(<OrderTable orders={[]} onSelectOrder={mockOnSelect} onCancelOrder={mockOnCancel} />);
     expect(screen.getByText(/no orders found/i)).toBeInTheDocument();
+  });
+
+  test('changes sorting when a header is clicked', () => {
+    render(<OrderTable orders={mockOrders} onSelectOrder={mockOnSelect} onCancelOrder={mockOnCancel} />);
+    
+    const priceHeader = screen.getByText(/Price/i);
+    fireEvent.click(priceHeader);
+    
+    expect(priceHeader).toHaveAttribute('aria-sort', 'ascending');
+    
+    fireEvent.click(priceHeader);
+    expect(priceHeader).toHaveAttribute('aria-sort', 'descending');
+  });
+
+  test('changes page size and page number', () => {
+    const manyOrders = Array.from({ length: 15 }, (_, i) => ({
+      ...mockOrders[0],
+      id: `${i + 1}`,
+      instrument: `AAPL-${i + 1}`,
+    }));
+
+    render(<OrderTable orders={manyOrders} onSelectOrder={mockOnSelect} onCancelOrder={mockOnCancel} />);
+    
+    expect(screen.getByLabelText(/Pagination/i)).toBeInTheDocument();
+    
+    const nextButton = screen.getByLabelText(/Next page/i);
+    fireEvent.click(nextButton);
+    
+    expect(screen.getByText(/AAPL-11/i)).toBeInTheDocument();
+    
+    const pageSizeSelect = screen.getByLabelText(/Page size:/i);
+    fireEvent.change(pageSizeSelect, { target: { value: '20' } });
+    
+    expect(screen.getByText(/Showing/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/15/i).length).toBeGreaterThan(0);
   });
 });
